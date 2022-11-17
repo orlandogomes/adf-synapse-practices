@@ -1,0 +1,25 @@
+
+CREATE TABLE [dbo].[Header](
+	[SalesOrderID] [int] NOT NULL,
+	[RevisionNumber] [tinyint] NOT NULL,
+	[OrderDate] [datetime] NOT NULL,
+	[DueDate] [datetime] NOT NULL,
+	[ShipDate] [datetime] NULL,
+	[Status] [tinyint] NOT NULL,
+	[OnlineOrderFlag] [dbo].[Flag] NOT NULL,
+	[SalesOrderNumber]  AS (isnull(N'SO'+CONVERT([nvarchar](23),[SalesOrderID],(0)),N'*** ERROR ***')),
+	[PurchaseOrderNumber] [dbo].[OrderNumber] NULL,
+	[AccountNumber] [dbo].[AccountNumber] NULL,
+	[CustomerID] [int] NOT NULL,
+	[ShipToAddressID] [int] NULL,
+	[BillToAddressID] [int] NULL,
+	[ShipMethod] [nvarchar](50) NOT NULL,
+	[CreditCardApprovalCode] [varchar](15) NULL,
+	[SubTotal] [money] NOT NULL,
+	[TaxAmt] [money] NOT NULL,
+	[Freight] [money] NOT NULL,
+	[TotalDue]  AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
+	[Comment] [nvarchar](max) NULL,
+	[rowguid] [uniqueidentifier] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL
+) 
